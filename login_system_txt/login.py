@@ -1,13 +1,14 @@
-from stdiomask import getpass
-import hashlib
+from stdiomask import getpass       # Prompt the user for a password with echoing **** only
+import hashlib                      # implements a common interface to many different secure hash and message digest algorithms.
 import os
-clear = lambda: os.system('cls')
+
+clear = lambda: os.system('cls')    # equivalent to "clear" linux command
 
 
 def main():
     clear()
-    print("MAIN MENU")
-    print("---------")
+    print("Do You have an Account?")
+    print("-----------------------")
     print()
     print("1 - Register")
     print("2 - Login")
@@ -22,16 +23,19 @@ def main():
     else:
         Login()
 
+
+
+
 def Register():
     clear()
     print("REGISTER")
     print("--------")
     print()
     while True:
-        userName = input("Enter Your Name: ").title()
+        userName = input("Enter ID : ").title()
         if userName != '':
             break
-    userName = sanitizeName(userName)
+    userName = sanitizeName(userName)   # if ID = University College London -> University-College-London
     if userAlreadyExist(userName):
         displayUserAlreadyExistMessage()
     else:
@@ -98,6 +102,10 @@ def addUserInfo(userInfo: list):
         file.write('\n')
 
 def userAlreadyExist(userName, userPassword=None):
+    if 'userInfo.txt' not in os.listdir('./'):
+        with open('userInfo.txt', 'w') as f:
+            pass
+
     if userPassword == None:
         with open('userInfo.txt', 'r') as file:
             for line in file:
@@ -128,7 +136,7 @@ def displayUserAlreadyExistMessage():
             Login()
             break
 
-def sanitizeName(userName):
+def sanitizeName(userName):     # preprocess user ID
     userName = userName.split()
     userName = '-'.join(userName)
     return userName
