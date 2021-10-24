@@ -36,7 +36,8 @@ def Register():
         if userName != '':
             break
     userName = sanitizeName(userName)   # if ID = University College London -> University-College-London
-    if userAlreadyExist(userName):
+
+    if userAlreadyExist(userName):      # Check ID first
         displayUserAlreadyExistMessage()
     else:
         while True:
@@ -50,7 +51,8 @@ def Register():
             else:
                 print("Passwords Don't Match")
                 print()
-        if userAlreadyExist(userName, userPassword):
+
+        if userAlreadyExist(userName, userPassword):    #
             while True:
                 print()
                 error = input("You Are Already Registered.\n\nPress (T) To Try Again:\nPress (L) To Login: ").lower()
@@ -106,13 +108,14 @@ def userAlreadyExist(userName, userPassword=None):
         with open('userInfo.txt', 'w') as f:
             pass
 
-    if userPassword == None:
-        with open('userInfo.txt', 'r') as file:
-            for line in file:
+    if userPassword == None:                            # Check user ID
+        with open('userInfo.txt', 'r') as f:
+            for line in f:
                 line = line.split()
-                if line[0] == userName:
+                if line[0] == userName:                 # if user ID exist return true
                     return True
         return False
+
     else:
         userPassword = hash_password(userPassword)
         usersInfo = {}
@@ -123,7 +126,7 @@ def userAlreadyExist(userName, userPassword=None):
                     usersInfo.update({line[0]: line[1]})
         if usersInfo == {}:
             return False
-        return usersInfo[userName] == userPassword
+        return usersInfo[userName] == userPassword      # boolean (if ID and pwd are matching -> True)
 
 def displayUserAlreadyExistMessage():
     while True:
