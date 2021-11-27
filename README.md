@@ -6,3 +6,5 @@
 2. Card game (black jack)
 3. import tutle
 4. tick tac toe
+5. checkio python game
+6. calculator
